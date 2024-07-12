@@ -1,14 +1,6 @@
 import { v4 } from 'uuid';
 
-interface ReserveRentalEvent {
-  rental: string;
-  rentalFrom: string;
-  rentalTo: string;
-  requestId: string;
-  runType: string;
-}
-
-export const handler = async (event: ReserveRentalEvent) => {
+export const handler = async (event: any) => {
   const { requestId, runType, rental, rentalFrom, rentalTo } = event;
 
   console.log(`Reserving rentals request: ${JSON.stringify(event, null, 2)}`, process.env.TABLE_NAME);
@@ -21,7 +13,10 @@ export const handler = async (event: ReserveRentalEvent) => {
   console.log(`carReservationId: ${carRentalReservationId}`);
 
   return {
-    status: 'ok',
-    carRentalReservationId
+    statusCode: 200,
+    body: JSON.stringify({
+      status: 'ok',
+      carRentalReservationId,
+    })
   };
 };
