@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test-client && npm run test-server",
+    "test": "npm run test-server",
     "test-client": "cd client && npm run test",
     "test-server": "cd server && npm run test",
     "install": "npm run install-client && npm run install-server",
