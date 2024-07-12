@@ -8,3 +8,8 @@ local.js
 assets/pages.js
 assets/partials.js
 .wrangler
+
+dist/
+.idea/
+cdk.out/
+.aws-sam/
