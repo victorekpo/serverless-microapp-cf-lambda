@@ -3,44 +3,10 @@ import { Construct } from 'constructs';
 import * as Lambda from "aws-cdk-lib/aws-lambda";
 import * as Apigw from 'aws-cdk-lib/aws-apigateway';
 import { createLambda, createLambdaFunctions } from "./lambda";
-import { createApiModels, linkBackendApi } from "./api";
 
 export class ServerlessBackendStack extends CDK.Stack {
   constructor(scope: Construct, id: string, props?: CDK.StackProps) {
     super(scope, id, props);
-
-    /**
-     * Simple API Gateway proxy integration
-     */
-    const api = new Apigw.RestApi(this, 'ServerlessSagaPattern', {
-      restApiName: 'Serverless Saga Pattern',
-      description: 'This service handles serverless saga pattern.',
-      deployOptions: {
-        stageName: 'test',  // Create the "test" stage initially
-      },
-    });
-    console.log('New API');
-
-    // Add the health check route with a mock integration
-    const healthResource = api.root.addResource('health');
-    healthResource.addMethod('GET', new Apigw.MockIntegration({
-      integrationResponses: [{
-        statusCode: '200',
-        responseTemplates: {
-          'application/json': JSON.stringify({ message: 'Health check OK' }),
-        },
-      }],
-      requestTemplates: {
-        'application/json': '{"statusCode": 200}',
-      },
-    }), {
-      methodResponses: [{
-        statusCode: '200',
-        responseModels: {
-          'application/json': Apigw.Model.EMPTY_MODEL,
-        },
-      }],
-    });
 
     // Layers
     const awsSdkLayer = new Lambda.LayerVersion(this, 'AWSdkLayer', {
@@ -62,39 +28,18 @@ export class ServerlessBackendStack extends CDK.Stack {
 
     const { backendServerlessLambda } = createLambdaFunctions(this, createLambda, layers)
 
-    // Create Api Models (request, response)
-    const { responseModel } = createApiModels(this, api);
-
-    // Link Saga to API
-    linkBackendApi(this, api, backendServerlessLambda, responseModel);
-
-    // Deploy the API Gateway stage
-    const deployment = new Apigw.Deployment(this, 'Deployment', {
-      api,
+    /**
+     * Simple API Gateway proxy integration
+     */
+    const api = new Apigw.LambdaRestApi(this, 'ServerlessSagaPattern', {
+      handler: backendServerlessLambda
     });
-
-    console.log("Redeploying API with new methods");
-    new Apigw.Stage(this, 'ProdStage', {
-      deployment,
-      stageName: 'prod',
-    });
+    console.log('New API');
 
     // Export the API Gateway URL
     new CDK.CfnOutput(this, 'ApiGatewayUrlOutput', {
       value: api.url,
-      exportName: 'ApiGatewayUrlOutput'
-    });
-
-    // Export the API Gateway RestApiId
-    new CDK.CfnOutput(this, 'ApiGatewayRestApiIdOutput', {
-      value: api.restApiId,
-      exportName: 'ApiGatewayRestApiIdOutput'
-    });
-
-    // Export the API Gateway RootResourceId
-    new CDK.CfnOutput(this, 'ApiGatewayRootResourceIdOutput', {
-      value: api.root.resourceId,
-      exportName: 'ApiGatewayRootResourceIdOutput'
+      exportName: 'BackendApiGatewayUrlOutput'
     });
   }
 }
