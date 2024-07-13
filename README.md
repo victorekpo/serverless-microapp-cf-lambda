@@ -1,5 +1,5 @@
 # Serverless React App
-Domain: `neweradesign.net`
+Domain: `cf.neweradesign.net`
 
 ## Client Hosted on Cloudflare Workers
 - uses Wrangler for orchestration
