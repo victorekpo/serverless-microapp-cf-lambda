@@ -8,3 +8,4 @@
 ## Server Hosted on AWS Lambda
 - uses node engine
 - best for database operations (i.e. working with MongoDB)
+- 10,000 free requests per day
