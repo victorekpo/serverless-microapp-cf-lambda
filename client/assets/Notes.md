@@ -1,0 +1,1 @@
+This folder hosts asset files that are built from handlebars.

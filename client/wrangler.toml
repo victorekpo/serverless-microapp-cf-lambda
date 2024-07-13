@@ -2,3 +2,7 @@ name = "tech"
 account_id = "**********"
 workers_dev = true
 compatibility_date = "2024-07-11"
+
+[build]
+command="npm run build"
+watch_dir="views/"

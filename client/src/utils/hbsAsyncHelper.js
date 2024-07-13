@@ -11,7 +11,7 @@ export const registerHBHelper = () => registerAsyncHelper(Handlebars,'asyncTest'
     return new Promise((resolve, reject) => {
         setTimeout(
             function() {
-                resolve(`Async render with params: ${options.hash.name} || ${options.hash.age}`)
+                resolve(`Async render with params: ${options.hash.name}`)
             },
             200
         );
