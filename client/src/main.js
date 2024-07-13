@@ -1,4 +1,4 @@
-import App from './App';
+import { App } from './App';
 import { createRoot } from 'react-dom/client';
 
 // Render your React component instead

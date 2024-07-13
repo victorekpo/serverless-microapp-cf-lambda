@@ -1,56 +1,34 @@
 import { Router } from 'itty-router';
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
+import * as routes from "./routers";
 
 const router = Router();
 
-// Serve the React app
-router.get('/', async () => {
-  // const html = ReactDOMServer.renderToString(<App />);
-  return new Response(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>React App on Cloudflare Workers</title>
-        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script src="bundle.js"></script>
-    </body>
-    </html>
-  `, {
-    headers: {
-      'Content-Type': 'text/html',
-    },
-  });
-});
+const { base64Handler, healthHandler, postHandler, rootHandler, routesAndAssetsHandler } = routes;
 
-// Respond to fetch events with the router
+/** The rootHandler will serve the React app accordingly
+ * Other routes can be defined as neeeded
+ */
+router.get('/', rootHandler);
+// Health route
+router.get('/health', healthHandler);
+// Test route
+router.get("/base64/:text", base64Handler);
+// Test post route
+router.post("/post", postHandler);
+
+/**
+ * This is the last route we define, it will match anything that hasn't hit a route we've defined
+ * above, therefore it's useful as a 404 (and avoids us hitting worker exceptions, so make sure
+ * to include it!).
+ */
+router.all("*", () => new Response("404, not found!", { status: 404 }));
+
+/**
+ * All incoming requests to the worker are passed to the router
+ * where your routes are called and the response is sent.
+ * routesAndAssetsHandler will map assets and routes accordingly
+ */
 addEventListener('fetch', event => {
-  // Pass the entire event object to handleAssetRequest function
-  event.respondWith(handleAssetRequest(event));
+  event.respondWith(routesAndAssetsHandler(event, router));
 });
 
-async function handleAssetRequest(event) {
-  // Extract the request from the event
-  const request = event.request;
-
-  // Check if the request is for bundle.js
-  if (request.url.endsWith('/bundle.js') || request.url.endsWith('/favicon.ico')) {
-    // Serve the bundle.js file from KV storage
-    try {
-      // Pass the entire event object to getAssetFromKV
-      return await getAssetFromKV(event);
-    } catch (e) {
-      return new Response(`Bundle not found: ${e.message}`, {
-        status: 404,
-        statusText: 'Not Found',
-      });
-    }
-  }
-
-  // For any other requests, handle them with the router
-  return router.handle(request);
-}
