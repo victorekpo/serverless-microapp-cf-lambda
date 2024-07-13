@@ -23,3 +23,7 @@ wrangler publish
 - [wrangler config](https://developers.cloudflare.com/workers/wrangler/configuration/)
 - [handlebars](https://marnixkok.nl/news/blog/handlebars-templates-in-cloudflare-workers)
 - [serverless rendering](https://blog.cloudflare.com/serverless-rendering-with-cloudflare-workers)
+
+Requirements
+- CLOUDFLARE_API_TOKEN must be set as an environment variable
+- configure wrangler.toml accordingly with account_id and pattern for deployment domain
