@@ -3,19 +3,19 @@
     <defs>
         <style>
             .a {
-                fill: #fff;
+            fill: #fff;
             }
 
             .b {
-                fill: #f48120;
+            fill: #f48120;
             }
 
             .c {
-                fill: #faad3f;
+            fill: #faad3f;
             }
 
             .d {
-                fill: #404041;
+            fill: #404041;
             }
         </style>
     </defs>
