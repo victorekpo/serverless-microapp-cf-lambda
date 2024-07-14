@@ -9,7 +9,7 @@ export const Home = () => {
 
   return (
     <div className="container">
-      <Header />
+      <Header/>
       <div className="row">
         <div className="col-12">
           <h1>Hello, Cloudflare Workers!</h1>
@@ -29,7 +29,7 @@ export const Home = () => {
           </Button>
         </div>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 };
