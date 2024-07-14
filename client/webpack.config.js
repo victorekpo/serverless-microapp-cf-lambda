@@ -8,7 +8,7 @@ module.exports = {
   mode: 'production',
   entry: './src/main.js',
   output: {
-    filename: 'bundle.js', // Use content hash for cache busting
+    filename: 'bundle.[contenthash].js', // Use content hash for cache busting
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -45,7 +45,7 @@ module.exports = {
         { from: './public', to: '' }, // Copy all files from public directory to dist
       ],
     }),
-    // new CompressionPlugin()
+    new CompressionPlugin()
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -54,21 +54,21 @@ module.exports = {
       '@public': path.resolve(__dirname, 'public'), // Alias for public folder
     }
   },
-  // optimization: {
-  //   minimize: true,
-  //   minimizer: [
-  //     new CssMinimizerPlugin(),
-  //     new TerserPlugin({
-  //       terserOptions: {
-  //         format: {
-  //           comments: false,
-  //         },
-  //       },
-  //       extractComments: false,
-  //     }),
-  //   ],
-  //   splitChunks: {
-  //     chunks: 'all',
-  //   },
-  // }
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new CssMinimizerPlugin(),
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+    splitChunks: {
+      chunks: 'all',
+    },
+  }
 };
