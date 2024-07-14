@@ -1,35 +1,31 @@
 import { useState } from 'react';
-import { Header } from "@/components/Header/Header";
-import { Footer } from "@/components/Footer/Footer";
 import { Button } from "@nextui-org/react";
 
-export const Home = () => {
+const Home = () => {
   const [count, setCount] = useState(0);
   const tester = "Victor E";
 
   return (
-    <div className="container">
-      <Header/>
-      <div className="row">
-        <div className="col-12">
-          <h1>Hello, Cloudflare Workers!</h1>
-          <br/>
-          <h3>This is a basic React page deployed on Cloudflare Workers.</h3>
-          <br/>
-          <pre><strong>Your name:</strong> { tester }</pre>
+    <div className="row">
+      <div className="col-12">
+        <h1>Hello, Cloudflare Workers!</h1>
+        <br/>
+        <h3>This is a basic React page deployed on Cloudflare Workers.</h3>
+        <br/>
+        <pre><strong>Your name:</strong> { tester }</pre>
 
-          <p>Count: { count }</p>
-          <br/>
-          <Button
-            color="primary"
-
-            onClick={ () => setCount(count + 1) }
-          >
-            Increase
-          </Button>
-        </div>
+        <p>Count: { count }</p>
+        <br/>
+        <Button
+          color="primary"
+          type="button"
+          onClick={ () => setCount(count + 1) }
+        >
+          Increase
+        </Button>
       </div>
-      <Footer/>
     </div>
   );
 };
+
+export default Home;

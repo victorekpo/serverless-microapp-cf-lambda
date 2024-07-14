@@ -1,11 +1,19 @@
-import * as React from "react";
 import { NextUIProvider } from "@nextui-org/react";
-import { Home } from "./pages/Home";
+import { Outlet } from 'react-router-dom';
+import { Header } from "@/components/Header/Header";
+import { Footer } from "@/components/Footer/Footer";
 
-export const App = () => {
+const App = () => {
   return (
-    <NextUIProvider>
-      <Home/>
-    </NextUIProvider>
+    <div className="container">
+      <NextUIProvider>
+        <Header/>
+        <Outlet/>
+        <Footer/>
+      </NextUIProvider>
+    </div>
+
   );
-}
+};
+
+export default App;

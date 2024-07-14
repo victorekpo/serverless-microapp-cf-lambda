@@ -5,30 +5,42 @@ const router = Router();
 
 const { base64Handler, healthHandler, postHandler, rootHandler, routesAndAssetsHandler } = routes;
 
-/** The rootHandler will serve the React app accordingly
- * Other routes can be defined as neeeded
+/**
+ * Health route
+ * This route is used to check the health status of the application.
+ * When a GET request is made to /health, it will be handled by the healthHandler.
  */
-router.get('/', rootHandler);
-// Health route
 router.get('/health', healthHandler);
-// Test route
+
+/**
+ * Test route for base64 encoding
+ * This route takes a text parameter and returns its base64 encoded version.
+ * When a GET request is made to /base64/:text, it will be handled by the base64Handler.
+ */
 router.get("/base64/:text", base64Handler);
-// Test post route
+
+/**
+ * Test POST route
+ * This route is used to handle POST requests for testing purposes.
+ * When a POST request is made to /post, it will be handled by the postHandler.
+ */
 router.post("/post", postHandler);
 
 /**
- * This is the last route we define, it will match anything that hasn't hit a route we've defined
- * above, therefore it's useful as a 404 (and avoids us hitting worker exceptions, so make sure
- * to include it!).
+ * Catch-all route for serving the React app
+ * This is the last route we define. It will match any route that hasn't been
+ * defined above, making it useful as a catch-all route.
+ * This ensures that any route not explicitly defined will serve the React app,
+ * allowing the client-side routing of React Router to take over.
  */
-router.all("*", () => new Response("404, not found!", { status: 404 }));
+router.all('*', rootHandler);
 
 /**
- * All incoming requests to the worker are passed to the router
- * where your routes are called and the response is sent.
- * routesAndAssetsHandler will map assets and routes accordingly
+ * Event listener for incoming requests
+ * All incoming requests to the worker are passed to the router where your routes
+ * are called, and the response is sent. The routesAndAssetsHandler will map
+ * assets and routes accordingly.
  */
 addEventListener('fetch', event => {
   event.respondWith(routesAndAssetsHandler(event, router));
 });
-
