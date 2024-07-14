@@ -1,1 +1,0 @@
-This folder will hold assets that are not brought in automatically by webpack

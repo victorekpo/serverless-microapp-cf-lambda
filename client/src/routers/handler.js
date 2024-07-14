@@ -15,13 +15,14 @@ export const routesAndAssetsHandler = async (event, router) => {
 
   // Check if the request is for a static asset (e.g., bundle.js, .html, .ico, .svg, .jpg, .png, .css)
   if (
-    (request.url.includes('bundle') && request.url.endsWith('.js'))
+    request.url.endsWith('.js')
     || request.url.endsWith('.html')
     || request.url.endsWith('/favicon.ico')
     || request.url.endsWith('.svg')
     || request.url.endsWith('.jpg')
     || request.url.endsWith('.png')
     || request.url.endsWith('.css')
+    || request.url.endsWith('.woff2')
   ) {
     // Serve the bundle.js file from KV storage
     try {
