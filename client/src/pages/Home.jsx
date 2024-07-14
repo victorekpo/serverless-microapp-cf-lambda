@@ -13,19 +13,16 @@ export const Home = () => {
       <Header />
       <div className="row">
         <div className="col-12">
-          <div>
-            <div>
-              <img src={logo} width="300"/>
-            </div>
-          </div>
+          <img src={ logo } width="200"/>
+          <br/>
           <h1>Hello, Cloudflare Workers!</h1>
+          <br/>
           <h3>This is a basic React page deployed on Cloudflare Workers.</h3>
-          <p>
-            <strong>Your name:</strong> { tester }
-          </p>
-          <pre>{ tester }</pre>
+          <br/>
+          <pre><strong>Your name:</strong> { tester }</pre>
 
           <p>Count: { count }</p>
+          <br/>
           <Button
             color="primary"
 
