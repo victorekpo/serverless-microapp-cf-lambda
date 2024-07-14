@@ -1,11 +1,14 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   entry: './src/main.js',
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle.[contenthash].js', // Use content hash for cache busting
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -21,7 +24,7 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
+        test: /\.[s]?css$/,
         use: ['style-loader', 'css-loader', 'postcss-loader', "sass-loader"],
       },
       {
@@ -42,6 +45,7 @@ module.exports = {
         { from: './public', to: '' }, // Copy all files from public directory to dist
       ],
     }),
+    new CompressionPlugin()
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -50,4 +54,21 @@ module.exports = {
       '@public': path.resolve(__dirname, 'public'), // Alias for public folder
     }
   },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new CssMinimizerPlugin(),
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+    splitChunks: {
+      chunks: 'all',
+    },
+  }
 };

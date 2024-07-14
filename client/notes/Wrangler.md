@@ -4,3 +4,4 @@ Workers Can't fetch same worker - https://community.cloudflare.com/t/issue-with-
 Service Bindings - https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/
 Worker Request Headers - https://developers.cloudflare.com/fundamentals/reference/http-request-headers/
 Environment Variables - https://developers.cloudflare.com/workers/configuration/environment-variables/
+Adding Cache - https://www.raymondcamden.com/2023/08/06/adding-caching-to-a-cloudflare-worker
