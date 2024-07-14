@@ -10,6 +10,18 @@ bucket = "./dist"
 [build]
 command = "npm run build"
 
-[route]
+[[routes]]
+pattern = "**********"
+custom_domain = true
+
+[[routes]]
+pattern = "**********"
+custom_domain = true
+
+[[routes]]
+pattern = "**********"
+custom_domain = true
+
+[[routes]]
 pattern = "**********"
 custom_domain = true
