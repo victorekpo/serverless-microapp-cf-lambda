@@ -9,6 +9,9 @@ export const routesAndAssetsHandler = async (event, router) => {
     request.url.endsWith('/bundle.js')
     || request.url.endsWith('/favicon.ico')
     || request.url.endsWith('.svg')
+    || request.url.endsWith('.jpg')
+    || request.url.endsWith('.png')
+    || request.url.endsWith('.css')
   ) {
     // Serve the bundle.js file from KV storage
     try {
