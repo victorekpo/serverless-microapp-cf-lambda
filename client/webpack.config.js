@@ -1,15 +1,18 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   entry: './src/main.js',
   output: {
-    filename: 'bundle.[contenthash].js', // Use content hash for cache busting
+    filename: 'bundle.[contenthash:8].js', // Use content hash for cache busting
     path: path.resolve(__dirname, 'dist'),
+    sourceMapFilename: '[name].[contenthash:8].map', // Add source maps
+    chunkFilename: '[id].[contenthash:8].js', // Use contenthash for chunks
   },
   module: {
     rules: [
@@ -42,8 +45,16 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: './public', to: '' }, // Copy all files from public directory to dist
+        {
+          from: 'public/assets', // Source directory
+          to: 'assets', // Target directory in the output path
+        },
       ],
+    }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html',
+      inject: 'body',
     }),
     new CompressionPlugin()
   ],
@@ -69,6 +80,8 @@ module.exports = {
     ],
     splitChunks: {
       chunks: 'all',
+      minSize: 0,
+      minChunks: 1
     },
   }
 };

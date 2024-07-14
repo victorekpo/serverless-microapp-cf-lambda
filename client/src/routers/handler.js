@@ -15,7 +15,7 @@ export const routesAndAssetsHandler = async (event, router) => {
 
   // Check if the request is for a static asset (e.g., bundle.js, .html, .ico, .svg, .jpg, .png, .css)
   if (
-    request.url.endsWith('/bundle.js')
+    (request.url.includes('bundle') && request.url.endsWith('.js'))
     || request.url.endsWith('.html')
     || request.url.endsWith('/favicon.ico')
     || request.url.endsWith('.svg')
@@ -28,7 +28,7 @@ export const routesAndAssetsHandler = async (event, router) => {
       // Pass the entire event object to getAssetFromKV
       return await getAssetFromKV(event);
     } catch (e) {
-      return new Response(`Bundle not found: ${e.message}`, {
+      return new Response(`Bundle not found: ${ e.message }`, {
         status: 404,
         statusText: 'Not Found',
       });
@@ -38,3 +38,5 @@ export const routesAndAssetsHandler = async (event, router) => {
   // For any other requests, handle them with the router
   return router.handle(request);
 };
+
+// Note: If getting Uncaught SyntaxError: Unexpected token '<', this is an indicator that the asset might not be mapped properly.
