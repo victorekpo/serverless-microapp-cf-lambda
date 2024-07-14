@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import logo from '../../public/cloudflare.svg'
-import { Header } from "../components/Header/Header";
-import { Footer } from "../components/Footer/Footer";
-import {Button} from "@nextui-org/react";
+import { useState } from 'react';
+import { Header } from "@/components/Header/Header";
+import { Footer } from "@/components/Footer/Footer";
+import { Button } from "@nextui-org/react";
 
 export const Home = () => {
   const [count, setCount] = useState(0);
@@ -13,8 +12,6 @@ export const Home = () => {
       <Header />
       <div className="row">
         <div className="col-12">
-          <img src={ logo } width="200"/>
-          <br/>
           <h1>Hello, Cloudflare Workers!</h1>
           <br/>
           <h3>This is a basic React page deployed on Cloudflare Workers.</h3>

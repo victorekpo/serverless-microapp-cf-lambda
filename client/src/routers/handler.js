@@ -1,12 +1,22 @@
 import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 
+/**
+ * Handles requests for both routes and static assets.
+ * If the request matches certain file types (e.g., .js, .html, .css),
+ * it serves them directly from KV storage using getAssetFromKV.
+ * For other requests, it delegates handling to the provided router.
+ * @param {Event} event - The Cloudflare Worker event object containing the request.
+ * @param {Router} router - The router object responsible for handling non-static asset requests.
+ * @returns {Response} A Response object containing the requested asset or routed content.
+ */
 export const routesAndAssetsHandler = async (event, router) => {
   // Extract the request from the event
   const request = event.request;
 
-  // Check if the request is for bundle.js
+  // Check if the request is for a static asset (e.g., bundle.js, .html, .ico, .svg, .jpg, .png, .css)
   if (
     request.url.endsWith('/bundle.js')
+    || request.url.endsWith('.html')
     || request.url.endsWith('/favicon.ico')
     || request.url.endsWith('.svg')
     || request.url.endsWith('.jpg')

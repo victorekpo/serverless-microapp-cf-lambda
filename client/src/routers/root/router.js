@@ -1,22 +1,13 @@
-export const rootHandler = async () => {
-    return new Response(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>React App on Cloudflare Workers</title>
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script src="bundle.js"></script>
-    </body>
-    </html>
-  `, {
-        headers: {
-            'Content-Type': 'text/html',
-        },
+import indexHTML from '../../../public/index.html';
+
+/**
+ * Handles requests to serve the index.html file.
+ * Uses the indexHTML imported from the public directory.
+ */
+export const rootHandler = async (request) => {
+    return new Response(indexHTML, {
+      headers: {
+        'Content-Type': 'text/html',
+      },
     });
 };

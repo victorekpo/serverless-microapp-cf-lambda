@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -35,7 +36,18 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './public', to: '' }, // Copy all files from public directory to dist
+      ],
+    }),
+  ],
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'), // Alias for src folder
+      '@public': path.resolve(__dirname, 'public'), // Alias for public folder
+    }
   },
 };
