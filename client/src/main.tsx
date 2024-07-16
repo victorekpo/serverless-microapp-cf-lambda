@@ -24,7 +24,8 @@ const router = createBrowserRouter([
 ]);
 
 // Render your React component instead
+// @ts-ignore
 const root = createRoot(document.getElementById('root'));
 root.render(
-  <RouterProvider router={ router }/>
+  <RouterProvider router={router}/>
 );

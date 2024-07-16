@@ -12,14 +12,14 @@ const Home = () => {
         <br/>
         <h3>This is a basic React page deployed on Cloudflare Workers.</h3>
         <br/>
-        <pre><strong>Your name:</strong> { tester }</pre>
+        <pre><strong>Your name:</strong> {tester}</pre>
 
-        <p>Count: { count }</p>
+        <p>Count: {count}</p>
         <br/>
         <Button
           color="primary"
           type="button"
-          onClick={ () => setCount(count + 1) }
+          onClick={() => setCount(count + 1)}
         >
           Increase
         </Button>

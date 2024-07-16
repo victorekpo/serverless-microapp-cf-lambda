@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
-  entry: './src/main.js',
+  entry: './src/main.tsx',
   output: {
     filename: 'bundle.[contenthash:8].js', // Use content hash for cache busting
     path: path.resolve(__dirname, 'dist'),
@@ -17,14 +17,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            configFile: './.babelrc',
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              configFile: './.babelrc',
+            },
           },
-        },
+          {
+            loader: 'ts-loader'
+          }
+        ]
       },
       {
         test: /\.[s]?css$/,
@@ -59,7 +64,7 @@ module.exports = {
     new CompressionPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       '@': path.resolve(__dirname, 'src'), // Alias for src folder
       '@public': path.resolve(__dirname, 'public'), // Alias for public folder

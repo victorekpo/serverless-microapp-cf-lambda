@@ -9,7 +9,7 @@ import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
  * @param {Router} router - The router object responsible for handling non-static asset requests.
  * @returns {Response} A Response object containing the requested asset or routed content.
  */
-export const routesAndAssetsHandler = async (event, router) => {
+export const routesAndAssetsHandler = async (event: any, router: any): Promise<Response> => {
   // Extract the request from the event
   const request = event.request;
 
@@ -27,8 +27,8 @@ export const routesAndAssetsHandler = async (event, router) => {
     try {
       // Pass the entire event object to getAssetFromKV
       return await getAssetFromKV(event);
-    } catch (e) {
-      return new Response(`Bundle not found: ${ e.message }`, {
+    } catch (e: any) {
+      return new Response(`Bundle not found: ${e.message}`, {
         status: 404,
         statusText: 'Not Found',
       });

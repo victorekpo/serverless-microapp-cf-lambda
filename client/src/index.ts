@@ -41,6 +41,6 @@ router.all('*', rootHandler);
  * are called, and the response is sent. The routesAndAssetsHandler will map
  * assets and routes accordingly.
  */
-addEventListener('fetch', event => {
+addEventListener('fetch', (event: any) => {
   event.respondWith(routesAndAssetsHandler(event, router));
 });
